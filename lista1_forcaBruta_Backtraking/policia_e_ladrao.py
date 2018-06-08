@@ -1,24 +1,43 @@
 entrada = int(raw_input())
+cont = 0
 
-def caminha(matriz, l, c):
-	if matriz[l][c] == 0:
-		matriz[l][c] = "visitado"
+def caminha(m, l, c):
+	if m[l][c] == 1:
+		return
 	
+	m[l][c] = -1
+	
+	if l == 4 and c == 4:
+		return
+	
+	if c + 1 < 5 and (m[l][c+1]) == '0':
+		caminha(m, l, c+1)
+	if c - 1 >= 0 and (m[l][c-1]) == '0':
+		caminha(m, l, c-1)
+	
+	if l + 1 < 5 and (m[l+1][c]) == '0':
+		caminha(m, l+1, c)
+	if l - 1 >= 0 and (m[l-1][c]) == '0':
+		caminha(m, l-1, c)
+	
+def geraMatriz():
+	matriz = []
+	for m in range(5):
+		linha = raw_input().split()
+		matriz.append(linha)
 
-
-# forma matriz a partir da entrada
-def geraMatriz(cont, entrada):
-	while cont < entrada:
-		matriz = []
-		for m in range(5):
-			linha = raw_input().split()
-			matriz.append(linha)
-		cont += 1
-		
-		# chamar aqui o caminha
-		# caminha(matriz, 0, 0)
-		print
-		
 	return matriz
 	
-print geraMatriz(0, entrada)
+	
+while cont < entrada:	
+	tabuleiro = geraMatriz()
+	
+	caminha(tabuleiro, 0, 0)
+	
+	if tabuleiro[4][4] == -1:
+		print "COPS"
+	else:
+		print "ROBBERS"
+
+	cont += 1
+	print
