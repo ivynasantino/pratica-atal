@@ -38,12 +38,16 @@ while True:
 	if resultado == -1:
 		print "CASE# %d" % (case)
 		print "%d not found" % marmoreChute
-		marmoreChute = int(raw_input())
-		resultado = buscaBinaria(marmores, marmoreChute, 0, len(marmores)-1)
+		
 		chance = inp[1]-1
 		while chance != 0:
+			marmoreChute = int(raw_input())
+			resultado = buscaBinaria(marmores, marmoreChute, 0, len(marmores)-1)
 			if marmoreChute == marmores[resultado]:
 				print "%d found at %d" % (marmoreChute, resultado+1)
+			else:
+				print "%d not found" % marmoreChute
+				
 			chance -= 1
 		
 	else:
