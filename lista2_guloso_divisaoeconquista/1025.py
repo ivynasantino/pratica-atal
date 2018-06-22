@@ -1,5 +1,5 @@
 def buscaBinaria(lista, valor, ini, fim):
-	if valor not in lista:
+	if ini > fim:
 		return -1
 	meio = (ini+fim)/2
 	if lista[meio] == valor:
@@ -7,53 +7,35 @@ def buscaBinaria(lista, valor, ini, fim):
 	elif lista[meio] < valor:
 		return buscaBinaria(lista, valor, meio+1, fim)
 	else:
-		return buscaBinaria(lista, valor, ini, meio) 
-
-
-def primeiroMarmore(result, lista):
-	primeiroIndice = result-1
-	for i in range(len(lista)-1,-1,-1):
-		if lista[result] == lista:
-			primeiroIndice -= 1
-			
-	return primeiroIndice
-
+		return buscaBinaria(lista, valor, ini, meio-1) 
 
 case = 1
-
 while True:	
 	inp = map(int, raw_input().split())
 	if inp[1] == 0 and inp[0] == 0: break	
 	marmores = []
 
-	for i in range(inp[0]):
+	for i in xrange(inp[0]):
 		entrada = int(raw_input())
 		marmores.append(entrada)
 	
-	marmoreChute = int(raw_input())
+	chutes = []
+	for i in xrange(inp[1]):
+		marmoreChute = int(raw_input())
+		chutes.append(marmoreChute)
 
 	marmores.sort()
+	print "CASE# %d:" % (case)
+	for i in xrange(len(chutes)):
 
-	resultado = buscaBinaria(marmores, marmoreChute, 0, len(marmores)-1)
-	if resultado == -1:
-		print "CASE# %d" % (case)
-		print "%d not found" % marmoreChute
-		
-		chance = inp[1]-1
-		while chance != 0:
-			marmoreChute = int(raw_input())
-			resultado = buscaBinaria(marmores, marmoreChute, 0, len(marmores)-1)
-			if marmoreChute == marmores[resultado]:
-				print "%d found at %d" % (marmoreChute, resultado+1)
-			else:
-				print "%d not found" % marmoreChute
-				
-			chance -= 1
-		
-	else:
-		print "CASE# %d" % (case)
-		result = primeiroMarmore(resultado, marmores)
-		print "%d found at %d" % (marmoreChute, result+2)	
-	
-	case += 1	
-
+		resultado = buscaBinaria(marmores, chutes[i], 0, len(marmores)-1)
+		if resultado != -1:
+			for j in xrange(resultado,-1,-1):
+				if marmores[resultado] == chutes[i]:
+					resultado -= 1
+				if marmores[resultado] < chutes[i]:
+					break
+			print "%d found at %d" % (chutes[i], resultado+2)
+		else:
+			print "%d not found" % chutes[i]	
+	case += 1 
